@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 
-const scrapeLinkedin = require("../scrappers/linkedinn")
-const scrapeInstagram = require("../scrappers/instagramm")
+const scrapeLinkedin = require("../scrappers/linkedin")
+const scrapeInstagram = require("../scrappers/instagram")
 
 const LinkedinProfile = require("../models/linkedinProfile")
 const InstagramProfile = require("../models/instagramProfile")
@@ -51,6 +51,11 @@ router.post("/", async (req, res) =>{
             }            
             await InstagramProfile.create(data)
         };
+        console.log("Platform:", platform)
+        console.log("Extracted data:", {
+            name: data.name || data.username,
+            followers: data.followers || data.follower_count,
+        })
         
         return res.status(200).json({ 
             success: true,
